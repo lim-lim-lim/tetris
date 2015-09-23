@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TETRIS</title>
+    <link rel="stylesheet" href="css/game.css"/>
+</head>
+<body>
+<div id="world">
+    <div id="intro-view" class="view"></div>
+    <div id="game-view" class="view">
+        <canvas id="game-bg" class="game-canvas" width="400" height="560"></canvas>
+        <canvas id="game-stage" class="game-canvas" width="400" height="560"></canvas>
+    </div>
+    <div id="end-view" class="view"></div>
+</div>
+<script src="lib/jquery-2.1.4.min.js"></script>
+<script src="js/game.js"></script>
+<script>
+    //test
+    TETRIS.Router.go( 'game' );
+</script>
+</body>
+</html>
