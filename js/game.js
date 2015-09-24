@@ -1,31 +1,4 @@
-var TETRIS = {};
-
-( function(){
-    function View( sel ){
-        this.$el = $( sel );
-    }
-
-    var PUBLIC = {
-        active:function(){
-            this.$el.fadeIn();
-            this.initialize();
-        },
-
-        deactive:function(){
-            this.$el.fadeOut();
-        },
-
-        initialize:function(){
-
-        }
-    };
-
-    View.prototype = PUBLIC;
-    TETRIS.View = View;
-}());
-
-( function(){
-
+( function( TETRIS ){
     var CONST_MAP_DATA = [
         1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
         1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
@@ -60,29 +33,76 @@ var TETRIS = {};
     var GameModel = {
         COL_NUM:20,
         CELL_SIZE:20,
-        MAP_DATA : null,
+        mapData:null,
         initMapData:function(){
-          this.MAP_DATA = CONST_MAP_DATA.concat();
+          this.mapData = CONST_MAP_DATA.concat();
         },
         getMapData:function(){
-            return this.MAP_DATA.concat();
+            return this.mapData;
         }
 
     };
     TETRIS.GameModel = GameModel;
-}());
+}( TETRIS ));
 
-( function(){
-    var GameCommand = {
-        execute:function(){},
-        deactive:function(){}
+
+( function( TETRIS ){
+
+    var PRIVATE = {
+        start:null,
+        now:null,
+        intance:null,
+        model:null,
+        scene:null,
+        FPS:1000/24,
+        frameHandle:null,
+        loop:function loop(){
+            PRIVATE.now = Date.now();
+            if( PRIVATE.now - PRIVATE.start >= PRIVATE.FPS ){
+                PRIVATE.start = Date.now();
+                PRIVATE.scene.render( model.mapData );
+            }
+            this.frameHandle = requestAnimationFrame( loop );
+        }
     };
 
-    window.GameCommand = GameCommand;
-}());
+    var PUBLIC = {
+        initialize:function(){
+            PRIVATE.model.init();
+        },
+        run:function(){
+            PRIVATE.start = Date.now();
+            PRIVATE.loop.call( this );
 
-( function( Model ){
-    function GameView( sel, stageSel, bgSel ){
+            //game loop
+            //scene.render()
+        },
+        stop:function(){
+            cancelRequestAnimationFrame( PRIVATE.frameHandle );
+        },
+        show: function () {
+
+        },
+        hide:function(){
+
+        }
+    }
+
+    function GameControl( model, scene ){
+        if( !PRIVATE.intance ){
+            PRIVATE.intance = this;
+            PRIVATE.model = model;
+            PRIVATE.scene = scene;
+        }
+        return PRIVATE.intance;
+    }
+
+    GameControl.prototype = PUBLIC;
+    TETRIS.GameControl = GameControl;
+}( TETRIS ));
+
+( function( TETRIS, Control, Model ){
+    function GameSecen( sel, stageSel, bgSel ){
         this.base( sel );
         var $stage = $( stageSel );
         this.stage = $stage[0].getContext( '2d' );
@@ -92,14 +112,12 @@ var TETRIS = {};
         this.bg = $bg[0].getContext( '2d' );
         this.bg.width = $bg.width();
         this.bg.height = $bg.height();
-        Model.initMapData();
     }
 
-    var PUBLIC = new TETRIS.View();
-    PUBLIC.base = TETRIS.View;
+    var PUBLIC = new TETRIS.Scene();
+    PUBLIC.base = TETRIS.Scene;
 
     PUBLIC.initialize = function(){
-        this.mapData = Model.getMapData();
         PRIVATE.drawBg.call( this );
     };
 
@@ -124,50 +142,6 @@ var TETRIS = {};
         }
     };
 
-    GameView.prototype = PUBLIC;
-    TETRIS.GameView = GameView;
-}( TETRIS.GameModel ));
-
-
-( function(){
-    var GameInvoke = {
-        commands:{
-            intro: null,
-            game: new TETRIS.GameCommand(),
-            //game:new TETRIS.GameView( '#game-view', '#game-stage', '#game-bg'),
-            end: null
-        },
-        currentCommand:null,
-        exe:function( status ){
-            if( this.currentCommand ){ this.currentCommand.deactive(); }
-            this.currentCommand = this.commands[ status ];
-            this.currentCommand.execute();
-        }
-    };
-
-    TETRIS.GameInvoke = GameInvoke;
-}());
-
-
-
-
-( function(){
-    var Assets = {
-
-    }
-
-    var PRIVATE = {
-        loadSprite:function(){
-            //return promise
-        },
-        loadBGM:function(){
-            //return promise
-        },
-        loadEffSnd:function(){
-            //return promise
-        }
-    }
-}());
-
-
-
+    GameSecen.prototype = PUBLIC;
+    TETRIS.GameSecen = GameSecen;
+}( TETRIS, TETRIS.GameControl, TETRIS.GameModel ));
