@@ -24,28 +24,82 @@ var TETRIS = {};
     TETRIS.View = View;
 }());
 
+( function(){
+
+    var CONST_MAP_DATA = [
+        1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+        1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+        1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+        1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+        1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+        1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+        1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+        1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+        1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+        1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+        1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+        1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+        1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+        1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+        1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+        1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+        1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+        1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+        1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+        1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+        1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+        1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+        1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+        1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+        1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+        1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+        1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+        1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+    ];
+
+    var GameModel = {
+        COL_NUM:20,
+        CELL_SIZE:20,
+        MAP_DATA : null,
+        initMapData:function(){
+          this.MAP_DATA = CONST_MAP_DATA.concat();
+        },
+        getMapData:function(){
+            return this.MAP_DATA.concat();
+        }
+
+    };
+    TETRIS.GameModel = GameModel;
+}());
 
 ( function(){
+    var GameCommand = {
+        execute:function(){},
+        deactive:function(){}
+    };
+
+    window.GameCommand = GameCommand;
+}());
+
+( function( Model ){
     function GameView( sel, stageSel, bgSel ){
         this.base( sel );
-        this.mapData = null;
-
         var $stage = $( stageSel );
         this.stage = $stage[0].getContext( '2d' );
         this.stage.width = $stage.width();
         this.stage.height = $stage.height();
-
         var $bg = $( bgSel );
         this.bg = $bg[0].getContext( '2d' );
         this.bg.width = $bg.width();
         this.bg.height = $bg.height();
+        Model.initMapData();
     }
 
     var PUBLIC = new TETRIS.View();
     PUBLIC.base = TETRIS.View;
 
     PUBLIC.initialize = function(){
-        this.mapData = CONST.MAP_DATA.concat();
+        this.mapData = Model.getMapData();
         PRIVATE.drawBg.call( this );
     };
 
@@ -58,73 +112,40 @@ var TETRIS = {};
             var row = 0;
             var color = 0;
             for( var i= 0, count=this.mapData.length ; i<count ; i+=1 ){
-                col = i % CONST.COL_NUM;
-                row = Math.floor( i / CONST.COL_NUM );
+                col = i % Model.COL_NUM;
+                row = Math.floor( i / Model.COL_NUM );
                 switch ( this.mapData[ i ] ){
                     case 0: color = 'ghostwhite'; break;
                     case 1: color = 'lightblue'; break;
                 }
                 this.bg.fillStyle = color;
-                this.bg.fillRect( col*CONST.CELL_SIZE, row*CONST.CELL_SIZE, CONST.CELL_SIZE, CONST.CELL_SIZE );
+                this.bg.fillRect( col*Model.CELL_SIZE, row*Model.CELL_SIZE, Model.CELL_SIZE, Model.CELL_SIZE );
             }
         }
     };
 
-    var CONST = {
-        COL_NUM:20,
-        CELL_SIZE:20,
-        MAP_DATA:[
-            1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-            1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
-        ]
-    };
-
     GameView.prototype = PUBLIC;
     TETRIS.GameView = GameView;
-}());
+}( TETRIS.GameModel ));
+
 
 ( function(){
-    var Router = {
-        viewMap:{
-            intro:new TETRIS.View( '#intro-view'),
-            game:new TETRIS.GameView( '#game-view', '#game-stage', '#game-bg'),
-            end:new TETRIS.View( '#end-view')
+    var GameInvoke = {
+        commands:{
+            intro: null,
+            game: new TETRIS.GameCommand(),
+            //game:new TETRIS.GameView( '#game-view', '#game-stage', '#game-bg'),
+            end: null
         },
-        currentView:null,
-        go:function( status ){
-            if( this.currentView ){ this.currentView.deactive(); }
-            this.currentView = this.viewMap[ status ];
-            this.currentView.active();
+        currentCommand:null,
+        exe:function( status ){
+            if( this.currentCommand ){ this.currentCommand.deactive(); }
+            this.currentCommand = this.commands[ status ];
+            this.currentCommand.execute();
         }
     };
 
-    TETRIS.Router = Router;
+    TETRIS.GameInvoke = GameInvoke;
 }());
 
 
