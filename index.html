@@ -7,19 +7,20 @@
 </head>
 <body>
 <div id="world">
-    <div id="intro-view" class="view"></div>
-    <div id="game-view" class="view">
+    <div id="intro-secen" class="view"></div>
+    <div id="game-secen" class="view">
         <canvas id="game-bg" class="game-canvas" width="400" height="560"></canvas>
         <canvas id="game-stage" class="game-canvas" width="400" height="560"></canvas>
     </div>
-    <div id="end-view" class="view"></div>
+    <div id="end-secen" class="view"></div>
 </div>
 <script src="lib/jquery-2.1.4.min.js"></script>
-<script src="js/common.js"></script>
-<script src="js/game.js"></script>
+<script src="js/game-secen.js"></script>
+<script src="js/game-control.js"></script>
+<script src="js/game-manager.js"></script>
 <script>
     //test
-    TETRIS.GameInvoke.go( 'game' );
+    new TETRIS.GameManager().startup();
 </script>
 </body>
 </html>

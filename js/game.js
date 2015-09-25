@@ -1,3 +1,8 @@
+
+
+
+
+//GameModel
 ( function( TETRIS ){
     var CONST_MAP_DATA = [
         1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
@@ -40,12 +45,15 @@
         getMapData:function(){
             return this.mapData;
         }
-
     };
+
     TETRIS.GameModel = GameModel;
 }( TETRIS ));
 
 
+
+
+//GameControl
 ( function( TETRIS ){
 
     var PRIVATE = {
@@ -56,6 +64,9 @@
         scene:null,
         FPS:1000/24,
         frameHandle:null,
+        init:function(){
+
+        },
         loop:function loop(){
             PRIVATE.now = Date.now();
             if( PRIVATE.now - PRIVATE.start >= PRIVATE.FPS ){
@@ -101,18 +112,11 @@
     TETRIS.GameControl = GameControl;
 }( TETRIS ));
 
+
+
+
+//GameSecen
 ( function( TETRIS, Control, Model ){
-    function GameSecen( sel, stageSel, bgSel ){
-        this.base( sel );
-        var $stage = $( stageSel );
-        this.stage = $stage[0].getContext( '2d' );
-        this.stage.width = $stage.width();
-        this.stage.height = $stage.height();
-        var $bg = $( bgSel );
-        this.bg = $bg[0].getContext( '2d' );
-        this.bg.width = $bg.width();
-        this.bg.height = $bg.height();
-    }
 
     var PUBLIC = new TETRIS.Scene();
     PUBLIC.base = TETRIS.Scene;
@@ -124,7 +128,23 @@
     PUBLIC.render = function(){
     };
 
+
     var PRIVATE = {
+        instance:null,
+        stage:null,
+        bg:null,
+        init:function( sel, stageSel, bgSel ){
+            this.base( sel );
+            var $stage = $( stageSel );
+            PRIVATE.stage = $stage[0].getContext( '2d' );
+            PRIVATE.stage.width = $stage.width();
+            PRIVATE.stage.height = $stage.height();
+
+            var $bg = $( bgSel );
+            PRIVATE.bg = $bg[0].getContext( '2d' );
+            PRIVATE.bg.width = $bg.width();
+            PRIVATE.bg.height = $bg.height();
+        },
         drawBg:function(){
             var col = 0;
             var row = 0;
@@ -141,6 +161,14 @@
             }
         }
     };
+
+    function GameSecen( sel, stageSel, bgSel ){
+        if( !PRIVATE.intance ){
+            PRIVATE.intance = this;
+            PRIVATE.init.call( this );
+        }
+        return PRIVATE.intance;
+    }
 
     GameSecen.prototype = PUBLIC;
     TETRIS.GameSecen = GameSecen;
