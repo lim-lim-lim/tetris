@@ -1,89 +1,3 @@
-var TETRIS = TETRIS || {};
-( function( TETRIS ){
-
-    var _instance = null;
-    var _$el = null;
-    var _control = null;
-
-    function IntroSecen( sel, control ){
-        if( _instance == null ){
-            _instance = this;
-            _init( sel );
-        }
-
-        return _instance;
-    }
-
-    function _init( sel, control ){
-        _$el = $( sel );
-        _control = control;
-    }
-
-    IntroSecen.prototype = {
-        show:function(){
-            _$el.show();
-            return this;
-        },
-        hide:function(){
-            _$el.hide();
-            return this;
-        },
-        show:function(){},
-        disable:function(){}
-    };
-
-
-    TETRIS.IntroSecen = IntroSecen;
-
-}( TETRIS ));
-
-( function( TETRIS ){
-
-    var _instance = null;
-    var _$el = null;
-    var _control = null;
-
-    function EndSecen( sel, control ){
-        if( _instance == null ){
-            _instance = this;
-            _init( sel );
-        }
-
-        return _instance;
-    }
-
-    function _init( sel, control ){
-        _$el = $( sel );
-        _control = control;
-    }
-
-    EndSecen.prototype = {
-        show:function(){
-            _$el.show();
-            return this;
-        },
-        hide:function(){
-            _$el.hide();
-            return this;
-        },
-        show:function(){},
-        disable:function(){}
-    };
-
-
-    TETRIS.EndSecen = EndSecen;
-
-}( TETRIS ));
-
-
-
-
-
-
-
-
-
-
 
 ( function( TETRIS ){
 
@@ -93,8 +7,46 @@ var TETRIS = TETRIS || {};
     var _bgContext = null;
     var _control = null;
     var _frame = null;
+    var _input = TETRIS.UserInput;
+    var _viewData = {
+        cellSize:20,
+        col:20,
+        mapData:[
+            1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+            1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+            1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+        ],
+        cellData : {
+            wall : 1
+        }
+    }
 
-    function GameSecen( containerSel, stageSel, bgSel, control ){
+    function GameScene( containerSel, stageSel, bgSel, control ){
         if( _instance == null ){
             _instance = this;
             _init( containerSel, stageSel, bgSel, control );
@@ -113,6 +65,7 @@ var TETRIS = TETRIS || {};
         _gameContext.height = _bgContext.height = height;
         _control = control;
         _frame = new TETRIS.GameFrame( _tick );
+        _renderBg();
     }
 
     function _tick(){
@@ -128,9 +81,30 @@ var TETRIS = TETRIS || {};
 
     }
 
-    GameSecen.prototype = {
-        tick:function(){
+    function _renderBg(){
+        _bgContext.save();
+        _bgContext.fillStyle = '#000000';
+        _bgContext.fillRect( 0, 0, _bgContext.width, _bgContext.height );
+        var col = 0;
+        var row = 0;
+        var mapData = _viewData.mapData;
+        var cellData = _viewData.cellData;
+        var cellSize = _viewData.cellSize
+        for( var i= 0, count=mapData.length ; i<count ; i+=1 ){
+            col = i % _viewData.col;
+            row = Math.floor( i / _viewData.col );
+            if( mapData[ i ]  === cellData.wall ){
+                console.log( cellSize );
+                _bgContext.fillStyle = '#222288';
+                _bgContext.fillRect( col*cellSize, row*cellSize, cellSize, cellSize );
+            }
+        }
+        _bgContext.restore();
+    }
 
+    GameScene.prototype = {
+        init:function(){
+            _frame.run();
         },
         show:function(){
             _$el.show();
@@ -140,16 +114,13 @@ var TETRIS = TETRIS || {};
             _$el.hide();
             return this;
         },
-        show:function(){
-
-        },
         disable:function(){
 
         }
     };
 
 
-    TETRIS.GameSecen = GameSecen;
+    TETRIS.GameScene = GameScene;
 
 }( TETRIS ));
 

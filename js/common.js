@@ -24,5 +24,5 @@ TETRIS = {};
 }());
 
 (function(){
-    var SceneManager
+
 }());
