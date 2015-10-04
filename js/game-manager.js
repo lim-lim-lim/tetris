@@ -1,11 +1,11 @@
 var TETRIS = TETRIS || {};
+
 ( function( TETRIS ){
 
-    var _control = TETRIS.GameControl;
     var _secenMap = {
-        intro: new TETRIS.IntroScene( '#intro-secen', _control).hide(),
-        game: new TETRIS.GameScene( '#game-secen', '#game-stage', '#game-bg', _control ).hide(),
-        end: new TETRIS.EndScene( '#end-secen', _control ).hide()
+        intro: new TETRIS.IntroScene( '#intro-secen').hide(),
+        game: new TETRIS.GameScene( '#game-secen', '#game-stage', '#game-bg' ).hide(),
+        end: new TETRIS.EndScene( '#end-secen' ).hide()
     };
     var _currentSecen = null;
 

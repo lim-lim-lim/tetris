@@ -1,4 +1,5 @@
 var TETRIS = TETRIS || {};
+
 ( function( TETRIS ){
     function GameFrame( tick, fps ){
         this.fps = 1000/fps || 1000/40;
@@ -6,10 +7,10 @@ var TETRIS = TETRIS || {};
         this.handle = null;
         this.start = null;
         this.now = null;
-
+        this.isStop = true;
         var self = this;
         this.bindRun = function(){
-            self.run();
+            if( !self.isStop ){ self.run();}
         };
     }
 
@@ -17,6 +18,7 @@ var TETRIS = TETRIS || {};
     GameFrame.prototype = {
 
         run:function(){
+            this.isStop = false;
             if( this.start == null ){
                 this.start = Date.now();
             }
@@ -25,11 +27,12 @@ var TETRIS = TETRIS || {};
                 this.tick();
                 this.start = this.now;
             }
-            this.handle = requestAnimationFrame( this.bindRun );
+            this.handle = window.requestAnimationFrame( this.bindRun );
         },
 
         stop:function(){
-            cancelRequestAnimationFrame( this.handle );
+            this.isStop = true;
+            window.cancelAnimationFrame( this.handle );
             this.start = null;
             this.now = null;
         }

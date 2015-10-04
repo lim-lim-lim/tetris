@@ -1,3 +1,4 @@
+var TETRIS = TETRIS || {};
 
 ( function( TETRIS ){
 

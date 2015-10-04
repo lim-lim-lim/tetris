@@ -1,4 +1,5 @@
 var TETRIS = TETRIS || {};
+
 ( function( TETRIS ){
 
     var _instance = null;
