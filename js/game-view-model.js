@@ -36,6 +36,7 @@ var TETRIS = TETRIS || {};
     TETRIS.GameViewModel = {
         cellSize:20,
         col:20,
+        row:Math.ceil(_constMapData.length/20 ),
         mapData:null,
         color : [ 'red', 'blue', 'violet', 'orange', 'yellow', 'aliceblue', 'green'],
         cellType : {
@@ -81,6 +82,35 @@ var TETRIS = TETRIS || {};
                 }
             }
         },
+
+        testFull:function(){
+            var col = 0;
+            var row = 0;
+            var check = 0;
+            var start = 0;
+            var end = 0;
+
+            for( var i= 0, count = this.mapData.length; i<count ; i+=1 ){
+                col = i % this.col;
+                row = Math.floor( i / this.col );
+                if( row === this.row-1 || row === 0 ){ check=0; continue; }
+                if( col === 0 || col === this.col-1 ){ check=0; continue; }
+                if( this.mapData[ i ] === this.cellType.empty ){ check=0; continue; }
+                if( ++check === this.col-2 ){
+                    start = row*this.col;
+                    end = start + this.col;
+                    for( var j= start; j<end ; j+=1 ){ this.mapData[ j ] = this.cellType.empty; }
+                    while( row-- ){
+                        start = row*this.col;
+                        end = start + this.col;
+                        for( var k= start; k<end ; k+=1 ){
+                            this.mapData[ k+this.col ] = this.mapData[ k ];
+                        }
+                    }
+                }
+            }
+        },
+
         consoleMapData:function(){
             var data = '';
             for( var i= 0, count=this.mapData.length ; i<count ; i+=1 ){

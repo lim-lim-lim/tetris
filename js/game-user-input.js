@@ -4,7 +4,7 @@ var TETRIS = TETRIS || {};
 
     var _instace = null;
     var _$doc = $( document );
-    var _keyMap = { left:false, top:false, right:false, bottom:false };
+    var _keyMap = { left:false, up:false, right:false, down:false, space:false };
     var _frame = null;
     var _input = false;
 
@@ -18,7 +18,7 @@ var TETRIS = TETRIS || {};
                     self.onInput( _keyMap );
                     _input = false;
                 }
-            },40);
+            },40).run();
         }
         return _instace
     }
@@ -28,26 +28,32 @@ var TETRIS = TETRIS || {};
             this.off();
             _$doc.on( 'keydown', function( event ){
                 switch( event.keyCode ){
+                    case 32: _keyMap.space=true; _input = true; break;
                     case 37: _keyMap.left=true; _input = true; break;
-                    case 38: _keyMap.top=true; _input = true; break;
+                    case 38: _keyMap.up=true; _input = true; break;
                     case 39: _keyMap.right=true; _input = true; break;
-                    case 40: _keyMap.bottom=true; _input = true; break;
+                    case 40: _keyMap.down=true; _input = true; break;
                 }
             });
 
             _$doc.on( 'keyup', function( event ){
                 switch( event.keyCode ){
+                    case 32: _keyMap.space=false; break;
                     case 37: _keyMap.left=false; break;
-                    case 38: _keyMap.top=false; break;
+                    case 38: _keyMap.up=false; break;
                     case 39: _keyMap.right=false; break;
-                    case 40: _keyMap.bottom=false; break;
+                    case 40: _keyMap.down=false; break;
                 }
             });
+
+            return this;
         },
 
         off:function(){
             _$doc.off( 'keydown' );
             _$doc.off( 'keyup' );
+
+            return this;
         }
     };
 

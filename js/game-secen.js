@@ -1,5 +1,5 @@
 
-( function( TETRIS, ViewModel, BlockManager  ){
+( function( TETRIS, ViewModel, GameWorld  ){
 
     var _instance = null;
     var _$el = null;
@@ -24,7 +24,7 @@
         _bgContext = $( bgSel )[ 0].getContext( '2d' );
         _gameContext.width = _bgContext.width = width;
         _gameContext.height = _bgContext.height = height;
-        _blockManager = new BlockManager( _render, _end );
+        _blockManager = new GameWorld( _render, _end );
         _renderBg();
     }
 
@@ -47,7 +47,7 @@
                 _gameContext.fillRect( col*cellSize, row*cellSize, cellSize, cellSize );
             }
         }
-        ViewModel.consoleMapData();
+        //ViewModel.consoleMapData();
         _bgContext.restore();
     }
 
@@ -97,7 +97,7 @@
 
     TETRIS.GameScene = GameScene;
 
-}( TETRIS, TETRIS.GameViewModel, TETRIS.BlockManager, TETRIS.GameFrame ));
+}( TETRIS, TETRIS.GameViewModel, TETRIS.GameWorld, TETRIS.GameFrame ));
 
 
 
