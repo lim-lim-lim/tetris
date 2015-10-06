@@ -58,7 +58,7 @@ var TETRIS = TETRIS || {};
     var _startOffsetX = ViewModel.col % 2 === 0 ? -1 : 0;
 
     function BlockItem( type ){
-        type = 0;
+        type = Math.round( Math.random() ) % 2 === 0 ? 3 : 5;
         this.x = ViewModel.col/2+_startOffsetX;
         this.y = -1;
         this.rotateIndex = 0;

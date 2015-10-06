@@ -123,7 +123,7 @@ var TETRIS = TETRIS || {};
 
 
     function _isCollision( x, y, data){
-        if( y <= 0 ) return false;
+        if( y == -1 ) return true;
         var mapData = ViewModel.getMapData();
         var blockData = data;
         var mapIndex = y*ViewModel.col + x;
@@ -134,6 +134,7 @@ var TETRIS = TETRIS || {};
             rectX = blockData[ i ][ 0 ];
             rectY = blockData[ i ][ 1 ];
             blockIndex = rectY*ViewModel.col + rectX;
+            if( mapIndex + blockIndex < 0 ){ continue; }
             if( mapData[ mapIndex + blockIndex ] !== ViewModel.cellType.empty ){
                 return true;
             }
