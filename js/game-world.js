@@ -114,7 +114,7 @@ var TETRIS = TETRIS || {};
     }
 
     function _canRight( block ){
-        return !_isCollision( block.getX()+1, block.getY()+1, block.getData() )
+        return !_isCollision( block.getX()+1, block.getY(), block.getData() )
     }
 
     function _canRotate( block ){

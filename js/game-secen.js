@@ -47,7 +47,7 @@
                 _gameContext.fillRect( col*cellSize, row*cellSize, cellSize, cellSize );
             }
         }
-        //ViewModel.consoleMapData();
+        //ViewModel.consoleMapData2();
         _bgContext.restore();
     }
 
