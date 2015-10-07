@@ -35,6 +35,10 @@ var TETRIS = TETRIS || {};
             window.cancelAnimationFrame( this.handle );
             this.start = null;
             this.now = null;
+        },
+
+        setFps:function( value ){
+            this.fps = 1000/value;
         }
     }
 

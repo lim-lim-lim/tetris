@@ -31,8 +31,7 @@
     function _render(){
         _gameContext.save();
         _gameContext.clearRect( 0, 0, _gameContext.width, _gameContext.height );
-        var col = 0;
-        var row = 0;
+        var col,row, x, y;
         var mapData = ViewModel.mapData;
         var cellType = ViewModel.cellType;
         var cellSize = ViewModel.cellSize;
@@ -42,9 +41,13 @@
             col = i % ViewModel.col;
             row = Math.floor( i / ViewModel.col );
             type = mapData[ i ];
+            x = col*cellSize;
+            y = row*cellSize;
             if( type  !== cellType.wall && type  !== cellType.empty ){
+                _gameContext.save();
                 _gameContext.fillStyle = ViewModel.color[ type ];
-                _gameContext.fillRect( col*cellSize, row*cellSize, cellSize, cellSize );
+                _gameContext.fillRect( x, y, cellSize, cellSize );
+                _gameContext.restore();
             }
         }
         //ViewModel.consoleMapData2();
@@ -52,23 +55,29 @@
     }
 
     function _renderBg(){
-        _bgContext.save();
-        _bgContext.fillStyle = '#000000';
-        _bgContext.fillRect( 0, 0, _bgContext.width, _bgContext.height );
-        var col = 0;
-        var row = 0;
+        var col, row, x, y;
         var mapData = ViewModel.mapData;
         var cellType = ViewModel.cellType;
         var cellSize = ViewModel.cellSize
         for( var i= 0, count=mapData.length ; i<count ; i+=1 ){
             col = i % ViewModel.col;
             row = Math.floor( i / ViewModel.col );
+            x =  col*cellSize;
+            y = row*cellSize;
             if( mapData[ i ]  === cellType.wall ){
-                _bgContext.fillStyle = '#222288';
-                _bgContext.fillRect( col*cellSize, row*cellSize, cellSize, cellSize );
+                _bgContext.save();
+                _bgContext.fillStyle = '#333333';
+                _bgContext.fillRect( x, y, cellSize, cellSize );
+                _bgContext.restore();
+            }else{
+                _bgContext.save();
+                _bgContext.fillStyle = '#191919';
+                _bgContext.strokeStyle = '#222222';
+                _bgContext.fillRect( x, y, cellSize, cellSize );
+                _bgContext.strokeRect( x, y, cellSize, cellSize );
+                _bgContext.restore();
             }
         }
-        _bgContext.restore();
     }
 
     function _end(){

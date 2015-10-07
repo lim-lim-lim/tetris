@@ -9,42 +9,69 @@ var TETRIS = TETRIS || {};
     var _input = null;
     var _onChange = null;
     var _onEnd = null;
+    var _$pendingBlockList = $('#block-list');
+    var _$pendingBlockItem = $('.pending-block');
+    var _$scoreContainer = $('#score-container');
+    var _addPoint = 10;
+    var _score = 0;
+    var _speed = 1;
+    var _fullCount = 0;
 
     function GameWorld( onChange, onEnd ){
         if( !_instance ){ _instance = this }
         _onChange = onChange;
         _onEnd = onEnd;
+
         _input = new UserInput( _onInput).on();
         return _instance;
     }
 
     GameWorld.prototype = {
         init:function(){
-            _pendingBlocks = [
-                _createBlock(),
-                _createBlock(),
-                _createBlock(),
-                _createBlock(),
-                _createBlock()
-            ];
-
+            _pendingBlocks = [ _createBlock(), _createBlock(),  _createBlock(), _createBlock() ];
+            _addPoint = 10;
+            _score = 0;
+            _speed = 1;
+            _fullCount = 0;
             if( _frame ){
                 _frame.stop();
                 _frame = null;
             }
-
-            var self = this;
-            _frame = new GameFrame( function(){
-                _moveDown();
-            }, 1 );
+            _frame = new GameFrame( function(){ _moveDown(); }, _speed );
             _frame.run();
             _nextBlock();
         }
     }
 
+    function _addScore(){
+        _$scoreContainer.text( _score += _addPoint );
+        if( ++_fullCount % 7 === 0 ){
+            _addPoint+=5;
+            _speed+=1;
+            _frame.setFps(_speed);
+        }
+    }
+
     function _nextBlock(){
-        _currentBlock = _pendingBlocks.shift();
-        _pendingBlocks.push( _createBlock() );
+        if( !_currentBlock ){
+            _currentBlock = _pendingBlocks.shift();
+            _pendingBlocks.push( _createBlock() );
+            _$pendingBlockItem.each( function(i, item){
+                var type = _pendingBlocks[ i].getType();
+                $( item).css( 'background-position', '0px '+ (-100*type) +'px' )
+            });
+        }else{
+            _currentBlock = _pendingBlocks.shift();
+            _pendingBlocks.push( _createBlock() );
+            _$pendingBlockList.stop().animate( { top:-100},150,function(){
+                _$pendingBlockList.css( 'top', 0  );
+                _$pendingBlockItem.each( function(i, item){
+                    var type = _pendingBlocks[ i].getType();
+                    console.log( type, 100*type );
+                    $( item).css( 'background-position', '0px '+ (-100*type) +'px' )
+                });
+            });
+        }
     }
 
     function _createBlock(){
@@ -65,7 +92,9 @@ var TETRIS = TETRIS || {};
                 return false;
             } else{
                 ViewModel.addBlockData( _currentBlock );
-                ViewModel.testFull();
+                for( var i= 0, count=ViewModel.testFull() ; i<count ; i++ ){
+                    _addScore();
+                }
                 _nextBlock();
                 _onChange();
                 return false;
@@ -104,24 +133,10 @@ var TETRIS = TETRIS || {};
         }
     }
 
-
-    function _canDown( block ){
-        return !_isCollision( block.getX(), block.getY()+1, block.getData() )
-    }
-
-    function _canLeft( block ){
-        return !_isCollision( block.getX()-1, block.getY(), block.getData() )
-    }
-
-    function _canRight( block ){
-        return !_isCollision( block.getX()+1, block.getY(), block.getData() )
-    }
-
-    function _canRotate( block ){
-        return !_isCollision( block.getX(), block.getY(), block.getData( (block.getRotate()+1)%4 ) )
-    }
-
-
+    function _canDown( block ){ return !_isCollision( block.getX(), block.getY()+1, block.getData() );}
+    function _canLeft( block ){ return !_isCollision( block.getX()-1, block.getY(), block.getData() ); }
+    function _canRight( block ){ return !_isCollision( block.getX()+1, block.getY(), block.getData() ); }
+    function _canRotate( block ){ return !_isCollision( block.getX(), block.getY(), block.getData( (block.getRotate()+1)%4 ) );}
     function _isCollision( x, y, data){
         if( y == -1 ) return true;
         var mapData = ViewModel.getMapData();
@@ -144,25 +159,11 @@ var TETRIS = TETRIS || {};
 
     function _onInput( keyMap ){
         ViewModel.removeBlockData( _currentBlock );
-        if( keyMap.left ){
-            _moveLeft();
-        }
-
-        if( keyMap.right ){
-            _moveRight();
-        }
-
-        if( keyMap.down ){
-            _moveDown();
-        }
-
-        if( keyMap.up ){
-            _rotate();
-        }
-
-        if( keyMap.space ){
-            _drop();
-        }
+        if( keyMap.left ){ _moveLeft(); }
+        if( keyMap.right ){ _moveRight(); }
+        if( keyMap.down ){ _moveDown(); }
+        if( keyMap.up ){ _rotate(); }
+        if( keyMap.space ){if( _currentBlock.getY() > -1 ){ _drop(); }}
     }
 
     TETRIS.GameWorld = GameWorld;

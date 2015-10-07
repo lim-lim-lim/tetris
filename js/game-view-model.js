@@ -38,7 +38,7 @@ var TETRIS = TETRIS || {};
         col:20,
         row:Math.ceil(_constMapData.length/20 ),
         mapData:null,
-        color : [ 'red', 'blue', 'violet', 'orange', 'yellow', 'aliceblue', 'green'],
+        color : [ '#ff8080', '#de87cd', '#ffccaa', '#ffdd55', '#5fd3bc', '#afafe9', '#abc837'],
         cellType : {
             empty: 8,
             wall : 9
@@ -89,7 +89,7 @@ var TETRIS = TETRIS || {};
             var check = 0;
             var start = 0;
             var end = 0;
-
+            var result = 0;
             for( var i= 0, count = this.mapData.length; i<count ; i+=1 ){
                 col = i % this.col;
                 row = Math.floor( i / this.col );
@@ -100,6 +100,7 @@ var TETRIS = TETRIS || {};
                     start = row*this.col;
                     end = start + this.col;
                     for( var j= start; j<end ; j+=1 ){ this.mapData[ j ] = this.cellType.empty; }
+                    result++;
                     while( row-- ){
                         start = row*this.col;
                         end = start + this.col;
@@ -109,6 +110,7 @@ var TETRIS = TETRIS || {};
                     }
                 }
             }
+            return result;
         },
 
         consoleMapData:function(){
