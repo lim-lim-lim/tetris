@@ -67,7 +67,6 @@ var TETRIS = TETRIS || {};
                 _$pendingBlockList.css( 'top', 0  );
                 _$pendingBlockItem.each( function(i, item){
                     var type = _pendingBlocks[ i].getType();
-                    console.log( type, 100*type );
                     $( item).css( 'background-position', '0px '+ (-100*type) +'px' )
                 });
             });
@@ -88,6 +87,7 @@ var TETRIS = TETRIS || {};
         }else{
             if( _currentBlock.getY() <= 0 ){
                 _frame.stop();
+                _input.off()
                 _onEnd();
                 return false;
             } else{

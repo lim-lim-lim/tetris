@@ -3,12 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <title>TETRIS</title>
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
     <link rel="stylesheet" href="css/game.css"/>
 </head>
 <body>
 <div id="world">
-    <div id="intro-secen" class="view"></div>
-        <div id="game-secen" class="view">
+    <div id="intro-scene" class="view">
+        <div id="title-container"><span id="title-t1">T</span><span id="title-e">E</span><span id="title-t2">T</span><span id="title-r">R</span><span id="title-i">I</span><span id="title-s">S</span></div>
+        <a id="start-btn" class="glyphicon glyphicon-play-circle"></a>
+        <ul id="rank-list" class="list-group">
+            <li class="list-group-item"><span class="badge">0</span>EMPTY</li>
+            <li class="list-group-item"><span class="badge">0</span>EMPTY</li>
+            <li class="list-group-item"><span class="badge">0</span>EMPTY</li>
+            <li class="list-group-item"><span class="badge">0</span>EMPTY</li>
+            <li class="list-group-item"><span class="badge">0</span>EMPTY</li>
+            <li class="list-group-item"><span class="badge">0</span>EMPTY</li>
+            <li class="list-group-item"><span class="badge">0</span>EMPTY</li>
+            <li class="list-group-item"><span class="badge">0</span>EMPTY</li>
+            <li class="list-group-item"><span class="badge">0</span>EMPTY</li>
+            <li class="list-group-item"><span class="badge">0</span>EMPTY</li>
+        </ul>
+        <a id="show-rank" class="glyphicon glyphicon-list"></a>
+    </div>
+    <div id="game-scene" class="view">
         <canvas id="game-bg" class="game-canvas" width="400" height="560"></canvas>
         <canvas id="game-stage" class="game-canvas" width="400" height="560"></canvas>
         <div id="block-list-container">
@@ -23,9 +41,22 @@
             0
         </div>
     </div>
-    <div id="end-secen" class="view"></div>
+    <div id="end-scene" class="view">
+        <div id="user-score">0</div>
+        <div id="regist-score" style="display: none;">
+            <div class="input-group">
+                <input id="user-name" type="text" class="form-control" maxlength="20" placeholder="Your Name">
+			      <span class="input-group-btn">
+			        <button id="regist" class="btn btn-default" type="button">OK</button>
+			      </span>
+            </div>
+        </div>
+        <a id="restart" class="glyphicon glyphicon-refresh"></a>
+        <a id="go-home" class="glyphicon glyphicon-home"></a>
+    </div>
 </div>
 <script src="lib/jquery-2.1.4.min.js"></script>
+<script src="js/game-net.js"></script>
 <script src="js/game-frame.js"></script>
 <script src="js/game-user-input.js"></script>
 <script src="js/game-view-model.js"></script>

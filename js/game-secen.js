@@ -24,7 +24,7 @@
         _bgContext = $( bgSel )[ 0].getContext( '2d' );
         _gameContext.width = _bgContext.width = width;
         _gameContext.height = _bgContext.height = height;
-        _blockManager = new GameWorld( _render, _end );
+        _blockManager = new GameWorld( _render, _end);
         _renderBg();
     }
 
@@ -81,8 +81,7 @@
     }
 
     function _end(){
-        console.log( "game over");
-        //alert( 'game over')
+        TETRIS.GameManager.setScene( 'end' );
     }
 
     GameScene.prototype = {
