@@ -35,16 +35,6 @@ var TETRIS = TETRIS || {};
         _$goHome.on( "click", function(){TETRIS.GameManager.setScene('intro'); })
     }
 
-    function _checkEntry10( value ){
-        Net.entry10( value).done( function(data){
-            if( data ){
-
-            }else{
-
-            }
-        })
-    }
-
     EndScene.prototype = {
         init:function(){},
         show:function(){

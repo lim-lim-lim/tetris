@@ -13,6 +13,7 @@ a{ text-decoration: none !important; }
     position: relative;
     background-image: url("../asset/img/bg.png");
     background-size: contain;
+    overflow: hidden;
 }
 
 .view{
