@@ -88,13 +88,14 @@ html{
 
 #ranker-container{
     width: 400px;
-    height: 500px;
+    height: 400px;
     top: 50%;
     left: 50%;
-    margin-top: -250px;
+    margin-top: -200px;
     margin-left: -200px;
     overflow: auto;
     position: absolute;
+    border-radius: 10px;
 }
 
 #ranker-table{
