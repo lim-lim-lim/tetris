@@ -1,6 +1,6 @@
-var TETRIS = TETRIS || {};
 
-( function( TETRIS ){
+define( function( require ){
+
     function GameFrame( tick, fps ){
         this.fps = 1000/fps || 1000/40;
         this.tick = tick;
@@ -13,7 +13,6 @@ var TETRIS = TETRIS || {};
             if( !self.isStop ){ self.run();}
         };
     }
-
 
     GameFrame.prototype = {
 
@@ -42,6 +41,5 @@ var TETRIS = TETRIS || {};
         }
     }
 
-    TETRIS.GameFrame = GameFrame;
-
-}( TETRIS ));
+    return GameFrame;
+});

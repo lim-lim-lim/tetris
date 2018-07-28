@@ -1,7 +1,5 @@
-var TETRIS = TETRIS || {};
-
-( function( TETRIS, GameFrame ){
-
+define( function( require ){
+    var GameFrame = require( 'game/game-frame' );
     var _instace = null;
     var _$doc = $( document );
     var _keyMap = { left:false, up:false, right:false, down:false, space:false };
@@ -52,11 +50,14 @@ var TETRIS = TETRIS || {};
         off:function(){
             _$doc.off( 'keydown' );
             _$doc.off( 'keyup' );
-
+            this.reset();
             return this;
+        },
+
+        reset:function(){
+            _keyMap = { left:false, up:false, right:false, down:false, space:false };
         }
     };
 
-    TETRIS.UserInput = UserInput;
-
-}( TETRIS, TETRIS.GameFrame ));
+    return UserInput;
+});

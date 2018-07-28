@@ -1,74 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>TETRIS</title>
-    <link rel="stylesheet" href="css/bootstrap-theme.min.css"/>
-    <link rel="stylesheet" href="css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="css/game.css"/>
+    <title>테트리스</title>
+    <link href='http://api.mobilis.co.kr/webfonts/v2/css/UnGungseoWeb' rel='stylesheet' type='text/css' />
+    <link rel="stylesheet" href="./assets/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="./assets/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="./assets/css/game.css"/>
 </head>
 <body>
 <div id="world">
-    <div id="intro-scene" class="view">
-        <div id="title-container"><span id="title-t1">T</span><span id="title-e">E</span><span id="title-t2">T</span><span id="title-r">R</span><span id="title-i">I</span><span id="title-s">S</span></div>
-        <a id="start-btn" class="glyphicon glyphicon-play-circle"></a>
-        <ul id="rank-list" class="list-group">
-            <li class="list-group-item"><span class="badge">0</span>EMPTY</li>
-            <li class="list-group-item"><span class="badge">0</span>EMPTY</li>
-            <li class="list-group-item"><span class="badge">0</span>EMPTY</li>
-            <li class="list-group-item"><span class="badge">0</span>EMPTY</li>
-            <li class="list-group-item"><span class="badge">0</span>EMPTY</li>
-            <li class="list-group-item"><span class="badge">0</span>EMPTY</li>
-            <li class="list-group-item"><span class="badge">0</span>EMPTY</li>
-            <li class="list-group-item"><span class="badge">0</span>EMPTY</li>
-            <li class="list-group-item"><span class="badge">0</span>EMPTY</li>
-            <li class="list-group-item"><span class="badge">0</span>EMPTY</li>
-        </ul>
-        <a id="show-rank" class="glyphicon glyphicon-list"></a>
-    </div>
-    <div id="game-scene" class="view">
-        <canvas id="game-bg" class="game-canvas" width="400" height="560"></canvas>
-        <canvas id="game-stage" class="game-canvas" width="400" height="560"></canvas>
-        <div id="block-list-container">
-            <ul id="block-list">
-                <li class="pending-block"></li>
-                <li class="pending-block"></li>
-                <li class="pending-block"></li>
-                <li class="pending-block"></li>
-            </ul>
-        </div>
-        <div id="score-container">
-            0
-        </div>
-    </div>
-    <div id="end-scene" class="view">
-        <div id="user-score">0</div>
-        <div id="regist-score" style="display: none;">
-            <div class="input-group">
-                <input id="user-name" type="text" class="form-control" maxlength="20" placeholder="Your Name">
-			      <span class="input-group-btn">
-			        <button id="regist" class="btn btn-default" type="button">OK</button>
-			      </span>
-            </div>
-        </div>
-        <a id="restart" class="glyphicon glyphicon-refresh"></a>
-        <a id="go-home" class="glyphicon glyphicon-home"></a>
-    </div>
+    <img id="spinner" src="./assets/img/spinner.gif">
 </div>
-<script src="lib/jquery-2.1.4.min.js"></script>
-<script src="js/game-net.js"></script>
-<script src="js/game-frame.js"></script>
-<script src="js/game-user-input.js"></script>
-<script src="js/game-view-model.js"></script>
-<script src="js/block-item.js"></script>
-<script src="js/game-world.js"></script>
-<script src="js/game-secen.js"></script>
-<script src="js/intro-secen.js"></script>
-<script src="js/end-secen.js"></script>
-<script src="js/game-manager.js"></script>
-<script>
-    //test
-    TETRIS.GameManager.startup();
-</script>
+<script data-main="src/game" src="./src/lib/require.js"></script>
 </body>
 </html>

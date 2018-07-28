@@ -1,6 +1,5 @@
-var TETRIS = TETRIS || {};
-( function( TETRIS ){
 
+define(function( require ){
 
     var _constMapData = [
         9,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,9,
@@ -31,15 +30,16 @@ var TETRIS = TETRIS || {};
         9,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,9,
         9,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,9,
         9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9
-    ]
+    ];
 
-    TETRIS.GameViewModel = {
+    return {
         cellSize:20,
         col:20,
         row:Math.ceil(_constMapData.length/20 ),
         mapData:null,
-        color : [ '#ff8080', '#de87cd', '#ffccaa', '#ffdd55', '#5fd3bc', '#afafe9', '#abc837'],
+        color : [ '#ff8080', '#de87cd', '#ffccaa', '#ffdd55', '#5fd3bc', '#afafe9', '#abc837', '#999999' ],
         cellType : {
+            die: 7,
             empty: 8,
             wall : 9
         },
@@ -61,7 +61,9 @@ var TETRIS = TETRIS || {};
                 rectX = blockData[ i ][ 0 ];
                 rectY = blockData[ i ][ 1 ];
                 blockIndex = rectY*this.col + rectX;
-                this.mapData[ mapIndex + blockIndex ] = this.cellType.empty;
+                if( mapIndex + blockIndex >= 0 ){
+                    this.mapData[ mapIndex + blockIndex ] = this.cellType.empty;
+                }
             }
         },
         addBlockData:function( block ){
@@ -133,7 +135,4 @@ var TETRIS = TETRIS || {};
             console.log( data );
         }
     };
-
-    TETRIS.GameViewModel.init();
-
-}( TETRIS ));
+});

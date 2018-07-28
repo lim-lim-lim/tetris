@@ -1,0 +1,20 @@
+<div id="ranker-container">
+    <table id="ranker-table" class="table" data-toggle="table" data-cache="false" data-height="200">
+        <thead>
+        <tr>
+            <th data-field="RANK">Name</th>
+            <th data-field="NAME">Name</th>
+            <th data-field="SCORE">Score</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each this}}
+        <tr>
+            <td>{{this.RANK }}</td>
+            <td>{{this.NAME}}</td>
+            <td>{{this.SCORE}}</td>
+        </tr>
+        {{/each}}
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,31 @@
+<div id="view-home" class="view">
+    <div id="title-container"><span id="title-t1">T</span><span id="title-e">E</span><span id="title-t2">T</span><span id="title-r">R</span><span id="title-i">I</span><span id="title-s">S</span></div>
+    {{#if name}}
+    <div id="hello">안녕하세요, {{name}} 님 :D</div>
+    <a id="start-btn" class="glyphicon glyphicon-play-circle"></a>
+    <ul id="rank-list" class="list-group">
+        <li class="list-group-item"><span class="badge">0</span>EMPTY</li>
+        <li class="list-group-item"><span class="badge">0</span>EMPTY</li>
+        <li class="list-group-item"><span class="badge">0</span>EMPTY</li>
+        <li class="list-group-item"><span class="badge">0</span>EMPTY</li>
+        <li class="list-group-item"><span class="badge">0</span>EMPTY</li>
+        <li class="list-group-item"><span class="badge">0</span>EMPTY</li>
+        <li class="list-group-item"><span class="badge">0</span>EMPTY</li>
+        <li class="list-group-item"><span class="badge">0</span>EMPTY</li>
+        <li class="list-group-item"><span class="badge">0</span>EMPTY</li>
+        <li class="list-group-item"><span class="badge">0</span>EMPTY</li>
+    </ul>
+    <a id="show-rank" class="glyphicon glyphicon-list"></a>
+    {{/if}}
+    {{#unless name}}
+    <div id="enter-user-name" >
+        <div class="input-group">
+            <input id="user-name" type="text" class="form-control" maxlength="20" placeholder="닉네임을 입력해주세요.">
+            <span class="input-group-btn">
+                <button id="regist-name" class="btn btn-default" type="button">OK</button>
+            </span>
+        </div>
+    </div>
+    {{/unless}}
+
+</div>
