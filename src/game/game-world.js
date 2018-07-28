@@ -8,6 +8,7 @@ define( [ 'jquery','game/game-view-model', 'game/game-user-input', 'game/block-i
     var _input = null;
     var _eventDispatcher = null;
     var _$scoreContainer = null;
+    var _$levelContainer = null;
     var _$pendingBlockList = null;
     var _$pendingBlockItem = null;
     var _addPoint = null;
@@ -25,6 +26,7 @@ define( [ 'jquery','game/game-view-model', 'game/game-user-input', 'game/block-i
         _input = new UserInput( _onInput).on();
         _eventDispatcher = eventDispatcher;
         _$scoreContainer = $('#score-container');
+        _$levelContainer = $('#level-container');
         _$pendingBlockList = $('#block-list');
         _$pendingBlockItem = $('.pending-block');
         _pendingBlocks = [ _createBlock(), _createBlock(),  _createBlock(), _createBlock() ];
@@ -49,9 +51,10 @@ define( [ 'jquery','game/game-view-model', 'game/game-user-input', 'game/block-i
 
     function _addScore( score ){
         _$scoreContainer.text( _score += score );
-        if( ++_fullCount % 7 === 0 ){
+        if( ++_fullCount % 5 === 0 ){
             _addPoint+=10;
             _speed+=1;
+            _$levelContainer.text( 'level. ' + Math.floor(_speed/3) )
             _frame.setFps(_speed);
         }
     }
@@ -185,7 +188,7 @@ define( [ 'jquery','game/game-view-model', 'game/game-user-input', 'game/block-i
             }else{
                 _bgContext.save();
                 _bgContext.fillStyle = '#191919';
-                _bgContext.strokeStyle = '#222222';
+                _bgContext.strokeStyle = '#333333';
                 _bgContext.fillRect( x, y, cellSize, cellSize );
                 _bgContext.strokeRect( x, y, cellSize, cellSize );
                 _bgContext.restore();
