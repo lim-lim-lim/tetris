@@ -1,7 +1,13 @@
 # TETRIS 
 HTML5 테트리스 웹게임
 
-게임실행 : http://www.limlimlim.com/game/tetris/
+Live Demo : http://www.limlimlim.com/game/tetris/
+
+## 로컬실행
+```
+npm install
+npm run start
+```
 
 ## 조작법
 - 방향키 위 : 블럭 회전
