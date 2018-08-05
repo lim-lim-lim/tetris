@@ -1,8 +1,8 @@
 # TETRIS 
-HTML5 테트리스 웹게임
-
-Live Demo : http://www.limlimlim.com/game/tetris/
-
+- HTML5 테트리스 웹게임
+- 2015년 개발
+- Live Demo : http://www.limlimlim.com/game/tetris/
+- #Javascript  #Backbone  #Requirejs #Handlebars  #Canvas  #jQuery  #HTML  #CSS
 ## 로컬실행
 ```
 npm install
